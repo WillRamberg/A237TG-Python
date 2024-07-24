@@ -90,7 +90,36 @@ def ff(data):
 # Skriv din kod här:
 
 def statistik(data):
-    
+    means = []
+    medians = []
+    maxes = []
+    groups = []
+    for i in range(1, 8):
+        groups.append(data[i][0])
+        sum = 0.00
+        for j in range(1, 45):
+            sum += float(data[i][j])
+        means.append(sum / (len(data[i]) - 1)) #mean
+        sort = sorted(data[i][1:])
+        medians.append((float(sort[21]) + float(sort[22]))/2) #median
+        maxes.append(max(sort)) #max
+
+    fig, ax = plt.subplots()
+    print(maxes, medians, means)
+    bars_max = ax.bar(groups, maxes, width=1, label='Max', color='blue')
+    bars_median = ax.bar(groups, medians, width=0.7, label='Median', color='green')
+    bars_mean = ax.bar(groups, means, width=0.4, label='Mean', color='red')
+
+    ax.set_xlabel('Years')
+    ax.set_ylabel('Values')
+    ax.set_title('Nested Bar Graph for Mean, Median, and Max')
+    ax.set_yticks(maxes)
+    ax.set_xticks(groups)
+    ax.set_xticklabels(groups)
+    ax.legend()
+
+    # Show plot
+    plt.show()
 
 # Huvudprogram med Meny från deluppgift 0. Använd menyrubriker enl. uppgiftsbeskrivningen.
 # Skriv din kod här:
@@ -113,8 +142,8 @@ while menu_choice != 6:
     elif menu_choice == 4:
         ff(livsData)
     elif menu_choice == 5:
-        print("Good")
-    elif menu_choice == 6:
         statistik(livsData)
+    elif menu_choice == 6:
+        print("Avslutar programmet!")
     else:
         print("Ange en annan siffra!")
