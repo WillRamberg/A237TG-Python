@@ -4,6 +4,7 @@
 # Placera dina modulimpoter här:
 import csv
 import matplotlib.pyplot as plt
+import numpy as np
 
 # Placera ev. funktioner som används i flera deluppgifter här:
 # Skriv din ev. kod här:
@@ -22,7 +23,7 @@ def read_file(filename):
 
 # Deluppgift 2: Funktioner från deluppgift 2 i ordning.
 # Skriv din kod här:
-def plot_table(data):
+def plottaKPI(data):
 
     years = [int(row[0]) for row in data[1:]]
     months = [int(months) for months in input("Ange vilka månader som ska analyseras: ").split(", ")]
@@ -42,21 +43,61 @@ def plot_table(data):
 
 # Deluppgift 3: Funktioner från deluppgift 3 i ordning.
 # Skriv din kod här:
+def varortjanster(data):
+    start, end = [int(x) for x in input("Ange mellan vilka år analysen omfattar (ex: 1996-2004): ").split("-")]
+    print(start, end)
+    years = [int(value.replace(',', '.')) for value in data[0][start-1979:end-1978]]
+    print("Varu-/tjänstegrupp \n1. livsmedel och alkoholfria drycker \n2. kläder och skor \n3. boende \n4. hälso- och sjukvård \n5. post och telekommunikationer \n6. rekreation och kultur \n7. restauranger och logi")
+    groups = [int(groups) for groups in input("Ange Varu-/tjänstegrupper som ska analyseras: ").split(", ")]
+
+    for group in groups:
+        if group in range (1,8):
+            group_data = [float(value.replace(',', '.')) for value in data[group][1:]]
+            group_years = [year for year in years]
+            values = group_data[years.index(start):years.index(end)+1]
+            plt.plot(group_years, values, label=data[group][0])
+    plt.legend()
+    plt.title("Prisutvecklingen för olika kategorier av varor och tjänster År" + str(start) + "-" + str(end))
+    plt.xlabel("År")
+    plt.ylabel("Prisutveckling")
+    plt.grid(True)
+    plt.show()
 
 
 # Deluppgift 4: Funktioner från deluppgift 4 i ordning.
 # Skriv din kod här:
 
+def ff(data):
+    print("Varu-/tjänstegrupp \n1. livsmedel och alkoholfria drycker \n2. kläder och skor \n3. boende \n4. hälso- och sjukvård \n5. post och telekommunikationer \n6. rekreation och kultur \n7. restauranger och logi")
+    group_choice = int(input("Ange kategori (1-7) som ska analyseras: "))
+    group_data = [0]
+    years = list(range(1980, 2024))
+    for i in range(2, 45):
+        print(i)
+        calculation = ((float(data[group_choice][i])-float(data[group_choice][i-1]))/float(data[group_choice][i-1])) * 100
+        print(calculation)
+        group_data.append(calculation)
+    print(group_data, years)
+    fig = plt.figure(figsize = (10, 5))
+    plt.bar(years, group_data)
+    plt.grid(True)
+    plt.xlabel("År")
+    plt.ylabel("Förändingsfaktor")
+    plt.title("Förändringsfaktor för " + data[group_choice][0])
+    plt.show()
 
 # Deluppgift 5: Funktioner från deluppgift 5 i ordning.
 # Skriv din kod här:
 
+def statistik(data):
+    
 
 # Huvudprogram med Meny från deluppgift 0. Använd menyrubriker enl. uppgiftsbeskrivningen.
 # Skriv din kod här:
 menu_choice = 0
+kpiData = read_file("kpi2023.csv")
+livsData = read_file("Varutjanstegrupp.csv")
 while menu_choice != 6:
-    kpiData = read_file("kpi2023.csv")
     titel = "Meny"
     print(f'{titel:^20}')
     font = "===="
@@ -66,14 +107,14 @@ while menu_choice != 6:
     if menu_choice == 1:
         kpiData = read_file("kpi2023.csv")
     elif menu_choice == 2:
-        plot_table(kpiData)
+        plottaKPI(kpiData)
     elif menu_choice == 3:
-        print("Good")
+        varortjanster(livsData)
     elif menu_choice == 4:
-        print("Good")
+        ff(livsData)
     elif menu_choice == 5:
         print("Good")
     elif menu_choice == 6:
-        print("Avslutar programet!")
+        statistik(livsData)
     else:
         print("Ange en annan siffra!")
