@@ -24,19 +24,20 @@ def read_file(filename):
 # Skriv din kod här:
 def plot_table(data):
 
-    months = [months for months in input("Ange vilka månader som ska analyseras: ").split(", ")]
-    print(months)
-    plt.figure(figsize=(43,14))
-
-    plt.plot(range(1980,2023), )
-
+    years = [int(row[0]) for row in data[1:]]
+    months = [int(months) for months in input("Ange vilka månader som ska analyseras: ").split(", ")]
     for month in months:
         if month in range(1, 13):
-            plt.plot(data['År'], data.iloc[:, month], label=data.columns[month])
-
+            monthly_value = [float(row[int(month)].replace(',', '.')) for row in data[1:]]
+            plt.plot(years, monthly_value, label = data[0][month])
+        elif month == 13:
+            monthly_value = [float(row[int(13)].replace(',', '.')) for row in data[1:]]
+            plt.plot(years, monthly_value, label = data[0][13])
+    plt.legend()
     plt.title("Konsumentprisindex År 1980-2023")
     plt.xlabel("År")
     plt.ylabel("Konsumentprisindex")
+    plt.grid(True)
     plt.show()
 
 # Deluppgift 3: Funktioner från deluppgift 3 i ordning.
