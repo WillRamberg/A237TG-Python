@@ -4,10 +4,12 @@
 # Placera dina modulimpoter här:
 import csv
 import matplotlib.pyplot as plt
-import numpy as np
 
 # Placera ev. funktioner som används i flera deluppgifter här:
 # Skriv din ev. kod här:
+
+# Deluppgift 1: Funktioner från deluppgift 1 i ordning.
+# Skriv din kod här:
 
 def read_file(filename):
     data_list = []
@@ -17,19 +19,15 @@ def read_file(filename):
             data_list.append(row)
     return data_list
 
-# Deluppgift 1: Funktioner från deluppgift 1 i ordning.
-# Skriv din kod här:
-
-
 # Deluppgift 2: Funktioner från deluppgift 2 i ordning.
 # Skriv din kod här:
 def plottaKPI(data):
 
     years = [int(row[0]) for row in data[1:]]
-    months = [int(months) for months in input("Ange vilka månader som ska analyseras: ").split(", ")]
+    months = [int(months) for months in input("Ange vilka månader som ska analyseras: ").split(", ")] #allows user to enter more than one value
     for month in months:
         if month in range(1, 13):
-            monthly_value = [float(row[int(month)].replace(',', '.')) for row in data[1:]]
+            monthly_value = [float(row[int(month)].replace(',', '.')) for row in data[1:]] #takes all values for each specific month enterd
             plt.plot(years, monthly_value, label = data[0][month])
         elif month == 13:
             monthly_value = [float(row[int(13)].replace(',', '.')) for row in data[1:]]
@@ -44,15 +42,15 @@ def plottaKPI(data):
 # Deluppgift 3: Funktioner från deluppgift 3 i ordning.
 # Skriv din kod här:
 def varortjanster(data):
-    start, end = [int(x) for x in input("Ange mellan vilka år analysen omfattar (ex: 1996-2004): ").split("-")]
+    start, end = [int(x) for x in input("Ange mellan vilka år analysen omfattar (ex: 1996-2023): ").split("-")] #allows user to choose the two years and splits it between -
     print(start, end)
-    years = [int(value.replace(',', '.')) for value in data[0][start-1979:end-1978]]
+    years = [int(value.replace(',', '.')) for value in data[0][start-1979:end-1978]] #takes all values between the start year and end year (-1979 since I use indexes)
     print("Varu-/tjänstegrupp \n1. livsmedel och alkoholfria drycker \n2. kläder och skor \n3. boende \n4. hälso- och sjukvård \n5. post och telekommunikationer \n6. rekreation och kultur \n7. restauranger och logi")
     groups = [int(groups) for groups in input("Ange Varu-/tjänstegrupper som ska analyseras: ").split(", ")]
 
     for group in groups:
         if group in range (1,8):
-            group_data = [float(value.replace(',', '.')) for value in data[group][1:]]
+            group_data = [float(value.replace(',', '.')) for value in data[group][1:]] #data for each group
             group_years = [year for year in years]
             values = group_data[years.index(start):years.index(end)+1]
             plt.plot(group_years, values, label=data[group][0])
@@ -72,12 +70,10 @@ def ff(data):
     group_choice = int(input("Ange kategori (1-7) som ska analyseras: "))
     group_data = [0]
     years = list(range(1980, 2024))
-    for i in range(2, 45):
-        print(i)
-        calculation = ((float(data[group_choice][i])-float(data[group_choice][i-1]))/float(data[group_choice][i-1])) * 100
-        print(calculation)
+    for i in range(2, 45): #skips the first step since it would be / 0 anyways
+        calculation = ((float(data[group_choice][i])-float(data[group_choice][i-1]))/float(data[group_choice][i-1])) * 100 #takes the exact expression
         group_data.append(calculation)
-    print(group_data, years)
+
     fig = plt.figure(figsize = (10, 5))
     plt.bar(years, group_data)
     plt.grid(True)
@@ -97,24 +93,25 @@ def statistik(data):
     for i in range(1, 8):
         groups.append(data[i][0])
         sum = 0.00
-        for j in range(1, 45):
+        for j in range(1, 45): #loops and creates three lists that will plot the bar table
             sum += float(data[i][j])
         means.append(sum / (len(data[i]) - 1)) #mean
         sort = sorted(data[i][1:])
         medians.append((float(sort[21]) + float(sort[22]))/2) #median
-        maxes.append(max(sort)) #max
+        maxes.append(float(max(sort))) #max
 
     fig, ax = plt.subplots()
-    print(maxes, medians, means)
-    bars_max = ax.bar(groups, maxes, width=1, label='Max', color='blue')
-    bars_median = ax.bar(groups, medians, width=0.7, label='Median', color='green')
-    bars_mean = ax.bar(groups, means, width=0.4, label='Mean', color='red')
+    bars_max = ax.bar(groups, maxes, width=0.75, label='Max', color='blue')
+    bars_median = ax.bar(groups, medians, width=0.5, label='Median', color='red')
+    bars_mean = ax.bar(groups, means, width=0.25, label='Mean', color='green')
 
-    ax.set_xlabel('Years')
     ax.set_ylabel('Values')
     ax.set_title('Nested Bar Graph for Mean, Median, and Max')
-    ax.set_yticks(maxes)
+    y_max = max(maxes)
+    y_ticks = range(0, int(y_max) + 100, 100)
+    ax.set_yticks(y_ticks)
     ax.set_xticks(groups)
+    plt.xticks(rotation=20)
     ax.set_xticklabels(groups)
     ax.legend()
 
