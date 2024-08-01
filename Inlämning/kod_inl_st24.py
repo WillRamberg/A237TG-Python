@@ -50,7 +50,7 @@ def varortjanster(data):
 
     for group in groups:
         if group in range (1,8):
-            group_data = [float(value.replace(',', '.')) for value in data[group][1:]] #data for each group
+            group_data = [float(value.replace(',', '.')) for value in data[group][start-1979:]] #data for each group
             group_years = [year for year in years]
             values = group_data[years.index(start):years.index(end)+1]
             plt.plot(group_years, values, label=data[group][0])
