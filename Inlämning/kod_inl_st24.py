@@ -12,11 +12,11 @@ import matplotlib.pyplot as plt
 # Skriv din kod här:
 
 def read_file(filename):
-    data_list = []
-    with open (filename, 'r') as file:
+    data_list = [] #creates list where the files data will be stored
+    with open (filename, 'r') as file: #opens the file with attribute read - r
         csv_reader = csv.reader(file, delimiter = ';')
-        for row in csv_reader:
-            data_list.append(row)
+        for row in csv_reader: 
+            data_list.append(row) #for every row it adds the rows data into the created list
     return data_list
 
 # Deluppgift 2: Funktioner från deluppgift 2 i ordning.
@@ -91,24 +91,24 @@ def statistik(data):
     maxes = []
     groups = []
     for i in range(1, 8):
-        groups.append(data[i][0])
+        groups.append(data[i][0]) #loops through 1-8 for all the different groups, and saves their name (found on index 0) into a list with all groups
         sum = 0.00
-        for j in range(1, 45): #loops and creates three lists that will plot the bar table
+        for j in range(1, 45): #loops thorugh all the years (1980 - 2023) using their indexes
             sum += float(data[i][j])
-        means.append(sum / (len(data[i]) - 1)) #mean
-        sort = sorted(data[i][1:])
-        medians.append((float(sort[21]) + float(sort[22]))/2) #median
-        maxes.append(float(max(sort))) #max
+        means.append(sum / (len(data[i]) - 1)) #calculates mean and adds into the list
+        sort = sorted(data[i][1:]) #makes a new list with the data that is sorted, but without the name (index 0) to be able to calculate median
+        medians.append((float(sort[21]) + float(sort[22]))/2) #calculates median and adds into the list
+        maxes.append(float(max(sort))) #calculates max and adds into the list
 
     fig, ax = plt.subplots()
     bars_max = ax.bar(groups, maxes, width=0.75, label='Max', color='blue')
-    bars_median = ax.bar(groups, medians, width=0.5, label='Median', color='red')
+    bars_median = ax.bar(groups, medians, width=0.5, label='Median', color='red') #plots all the different bars (max, median and mean)
     bars_mean = ax.bar(groups, means, width=0.25, label='Mean', color='green')
 
     ax.set_ylabel('Values')
     ax.set_title('Nested Bar Graph for Mean, Median, and Max')
     y_max = max(maxes)
-    y_ticks = range(0, int(y_max) + 100, 100)
+    y_ticks = range(0, int(y_max) + 100, 100) #changes so the bar graph starts from 0 and ends att the highest point it will reach with all graphs. Then makes it jump with 100
     ax.set_yticks(y_ticks)
     ax.set_xticks(groups)
     plt.xticks(rotation=20)
