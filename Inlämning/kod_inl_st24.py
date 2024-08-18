@@ -24,7 +24,7 @@ def read_file(filename):
 def plottaKPI(data):
 
     years = [int(row[0]) for row in data[1:]]
-    months = [int(months) for months in input("Ange vilka månader som ska analyseras: ").split(", ")] #allows user to enter more than one value
+    months = [int(months) for months in input("Ange vilka månader som ska analyseras: ex ('1, 15' eller '1, 4, 15')").split(", ")] #allows user to enter more than one value
     for month in months:
         if month in range(1, 13):
             monthly_value = [float(row[int(month)].replace(',', '.')) for row in data[1:]] #takes all values for each specific month enterd
@@ -99,6 +99,8 @@ def statistik(data):
         sort = sorted(data[i][1:]) #makes a new list with the data that is sorted, but without the name (index 0) to be able to calculate median
         medians.append((float(sort[21]) + float(sort[22]))/2) #calculates median and adds into the list
         maxes.append(float(max(sort))) #calculates max and adds into the list
+
+    
 
     fig, ax = plt.subplots()
     bars_max = ax.bar(groups, maxes, width=0.75, label='Max', color='blue')
