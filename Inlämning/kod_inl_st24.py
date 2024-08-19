@@ -100,7 +100,11 @@ def statistik(data):
         medians.append((float(sort[21]) + float(sort[22]))/2) #calculates median and adds into the list
         maxes.append(float(max(sort))) #calculates max and adds into the list
 
-    
+    header= f"{'Varu-/tjänstegrupp':<40} {'Max':>10} {'Median':>10} {'Medelvärden':>15}"
+    print(header)
+    for i in range(len(groups)):
+        print("-" * len(header))
+        print(f"{groups[i]:<40} {maxes[i]:>10.2f} {medians[i]:>10.2f} {means[i]:>15.2f}")
 
     fig, ax = plt.subplots()
     bars_max = ax.bar(groups, maxes, width=0.75, label='Max', color='blue')
