@@ -1,5 +1,6 @@
 # Tentamen 2024-08-19 - 2024-08-20 Uppgift 3 (6p)
 from random import randint
+import matplotlib.pyplot as plt
 print('Uppgift 3\n')
 # OBS! I denna uppgift är det inte tillåtet att använda funktionerna min(), max() och sum() 
 # för att beräkna minimum, maximum och medelvärde.  
@@ -27,7 +28,21 @@ for i in range(0,length):
     array.append(insidearray)
 print(array)
 
-print("Radnummer \tminimum \tmaximum \tMedelvärde")
+header= f"{'Radnummer':<10} {'minimum':>10} {'maximum':>10} {'Medelvärde':>15}"
+seperator = "-" * len(header)
+print(header)
 for i in range(0, length):
-    print(i, "\t", mins[i], "\t", maxes[i], "\t", sums[i]/length)
-    print("-"*50)
+    print(f"{i:<13} {mins[i]:<10.2f} {maxes[i]:<12.2f} {sums[i]/length:.2f}")
+    print(seperator)
+
+x = list(range(length))
+plt.bar(x, maxes, width=0.4, label='Max', align='center')
+plt.bar(x, mins, width=0.4, label='Min', align='center')
+
+plt.xlabel('Index av listan')
+plt.ylabel('Minsta och högsta')
+plt.title('Minsta och högsta värdena av listan')
+plt.xticks(x)
+plt.legend()
+
+plt.show()
