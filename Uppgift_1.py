@@ -7,7 +7,7 @@ import math
 
 def V_Klot(r):
     return 4* math.pi * r**3 / 3
-
+#Functions to calculate Volume and Area using given formula
 def A_Klot(r):
     return 4 * math.pi * r**2
 
@@ -18,10 +18,10 @@ def main():
         choice = int(input("Ange det meny alternativet du vill köra: "))
         if choice == 1:
             r = int(input("Ange värdet på radien: "))
-            print(f"Volymen av klotet är: {V_Klot(r):.2f} cm^3")
+            print(f"Volymen av klotet är: {V_Klot(r):.2f} cm^3") #Calls function to return and print Volume using V_Klot(r)
         elif choice == 2:
             r = int(input("Ange värdet på radien: "))
-            print(f"Arean av klotet är: {A_Klot(r):.2f} cm^2")
+            print(f"Arean av klotet är: {A_Klot(r):.2f} cm^2") #Calls function to return and print Area using A_Klot(r)
         elif choice == 3:
             print("Avslutar programmet")
             break

@@ -9,9 +9,9 @@ random_letters = []
 counter = 0
 choice = input("Skriv in bokstaven som ska antalet förekomsten av den beräknas: ")
 for i in range(0,length):
-    random_letter = randint(ord('a'), ord('z'))
-    random_letters.append(chr(random_letter))
-    if choice == chr(random_letter):
+    random_letter = randint(ord('a'), ord('z')) #Ord for Ordeal, gives Ascii value for a specific character
+    random_letters.append(chr(random_letter)) 
+    if choice == chr(random_letter): #If choice is the same as a random letter that is added to the list random_letters, it adds one to the letter counter
         counter +=1
 print("Förekomsten av", choice, "i listan ", random_letters, "är lika med", counter)
 

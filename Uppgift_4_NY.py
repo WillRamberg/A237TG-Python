@@ -21,7 +21,7 @@ def sort_funk(lista):
         else:
             i+=1
     return lista
-test_lista = [5, 8, 2, 20, 13, 1]
+test_lista = [27, 13, 5, 8, 75, 103]
 print(f"ursprunglig lista {test_lista}")
 sort_funk(test_lista)
 print(f"sorterad lista {test_lista}")
